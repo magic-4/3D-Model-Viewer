@@ -39,10 +39,19 @@
     </style>
 </head>
 <body>
+        <!-- 로그인 페이지 -->
+        <div id="loginPage" style="display: block;">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username" />
+            <input type="password" id="password" placeholder="Password" />
+            <button onclick="login()">Login</button>
+            <p id="loginError" style="color: red; display: none;">Invalid credentials. Please try again.</p>
+        </div>
+
     <h1>3D Model Viewer with Categories</h1>
 
-    <!-- 항목 관리 -->
-    <div id="categories">
+    <!-- 카테고리 관리 -->
+    <div id="categories" style="display: none;">
         <h2>Categories</h2>
         <input type="text" id="newCategory" placeholder="Enter category name">
         <button onclick="addCategory()">Add Category</button>
@@ -63,19 +72,5 @@
     <div id="viewer"></div>
 
     <script src="app.js"></script>
-
-    <!-- 로그인 UI 추가 -->
-<div id="loginSection">
-    <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-</div>
-
-<div id="logoutSection" style="display: none;">
-    <h2>Welcome, <span id="currentUser"></span></h2>
-    <button onclick="logout()">Logout</button>
-</div>
-
 </body>
 </html>
