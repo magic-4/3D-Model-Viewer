@@ -165,5 +165,67 @@ function renderSTL(file) {
         animate();
     };
 
+    // 사용자 데이터 관리
+const users = {
+    admin: { password: "admin123", role: "admin", categories: [] }, // 관리자는 모든 카테고리에 접근 가능
+    user1: { password: "user123", role: "user", categories: ["Category1", "Category2"] }, // 예제 사용자
+};
+
+let currentUser = null; // 현재 로그인한 사용자
+
+// 로그인 함수
+function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (users[username] && users[username].password === password) {
+        currentUser = { username, ...users[username] };
+        alert(`Welcome, ${username}!`);
+        updateUI();
+    } else {
+        alert("Invalid username or password!");
+    }
+}
+
+// 로그아웃 함수
+function logout() {
+    currentUser = null;
+    alert("Logged out successfully.");
+    updateUI();
+}
+
+// UI 업데이트
+function updateUI() {
+    const loginSection = document.getElementById("loginSection");
+    const logoutSection = document.getElementById("logoutSection");
+    const categoryList = document.getElementById("categoryList");
+
+    if (currentUser) {
+        loginSection.style.display = "none";
+        logoutSection.style.display = "block";
+        document.getElementById("currentUser").textContent = currentUser.username;
+
+        // 카테고리 표시
+        categoryList.innerHTML = "";
+
+        const accessibleCategories =
+            currentUser.role === "admin"
+                ? Object.keys(categories) // 관리자는 모든 카테고리
+                : currentUser.categories; // 사용자는 할당된 카테고리만
+
+        accessibleCategories.forEach(category => {
+            const li = document.createElement("li");
+            li.textContent = category;
+            li.onclick = () => showFilesInCategory(category);
+            categoryList.appendChild(li);
+        });
+    } else {
+        loginSection.style.display = "block";
+        logoutSection.style.display = "none";
+        categoryList.innerHTML = ""; // 카테고리 숨기기
+    }
+}
+
+
     reader.readAsArrayBuffer(file);
 }
